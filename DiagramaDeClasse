@@ -1,0 +1,46 @@
+# Arquitetura do Framework CLIP
+
+O projeto utiliza o padrão de projeto **Factory Method** para desacoplar a lógica de ingestão de dados do processamento central.
+
+```mermaid
+classDiagram
+    class CLIPService {
+        +Config config
+        +Scheduler scheduler
+        +iniciar()
+        +setup_logging()
+    }
+
+    class ConnectorFactory {
+        +get_connector(type, params) BaseConnector
+    }
+
+    class BaseConnector {
+        <<abstract>>
+        +dict params
+        +fetch_data()*
+        +transform_to_json()*
+        +send_to_rabbit()
+    }
+
+    class CSVConnector {
+        +fetch_data()
+        +transform_to_json()
+    }
+
+    class APIConnector {
+        +fetch_data()
+        +transform_to_json()
+    }
+
+    class DBConnector {
+        +fetch_data()
+        +transform_to_json()
+    }
+
+    CLIPService --> ConnectorFactory : solicita conector
+    ConnectorFactory ..> BaseConnector : cria
+    BaseConnector <|-- CSVConnector : implementa
+    BaseConnector <|-- APIConnector : implementa
+    BaseConnector <|-- DBConnector : implementa
+    CLIPService o-- BaseConnector : gerencia execução
