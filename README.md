@@ -1,4 +1,3 @@
-
 ![Logo do CLIP](https://github.com/caju1000/CLIP/blob/main/CLIP.png)
 
 
