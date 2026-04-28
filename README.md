@@ -1,5 +1,7 @@
-![Logo do CLIP](https://github.com/caju1000/CLIP/blob/main/CLIP.png)
 
+<div align="center">
+  <img src="https://github.com/caju1000/CLIP/blob/main/CLIP.png" alt="Logo do CLIP" width="500px">
+</div>
 
 
 ## Arquitetura do CLIP
