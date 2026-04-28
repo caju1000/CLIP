@@ -1,4 +1,9 @@
 ## Arquitetura do CLIP
+
+![Logo do CLIP](https://github.com/caju1000/CLIP/blob/main/CLIP.png)
+
+
+
 Abaixo está o diagrama de classes que descreve a estrutura do CLIP utilizando o padrão Factory:
 
 ```mermaid
