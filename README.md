@@ -38,21 +38,66 @@ Abaixo está o diagrama de classes que descreve a estrutura do CLIP utilizando o
 
 ```mermaid
 classDiagram
-    class CLIPService {
-        +Config config
-        +Scheduler scheduler
-        +iniciar()
+    class Main_Maestro {
+        +String source_id
+        +Boolean debug_mode
+        +Boolean scheduler_mode
+        +run_pipeline()
     }
-    class ConnectorFactory {
-        +get_connector(type, params) BaseConnector
+
+    class CLIPFactory {
+        +dict _collectors_registry
+        +get_collector(source_id, debug) CLIPCollector
     }
-    class BaseConnector {
+
+    class CLIPCollector {
         <<abstract>>
-        +fetch_data()*
-        +transform_to_json()*
-        +send_to_rabbit()
+        +String name
+        +Boolean debug
+        +Logger logger
+        +Config config
+        #_setup_logging()
+        +run()* +integrate(queue, data)
     }
-    ConnectorFactory ..> BaseConnector : cria
-    BaseConnector <|-- CSVConnector : implementa
-    BaseConnector <|-- APIConnector : implementa
-    CLIPService --> ConnectorFactory : solicita
+
+    class StreamingDataCollector {
+        +int listen_port
+        +run() 
+        #_handle_socket_connection()
+    }
+
+    class DatabaseBatchCollector {
+        +String db_credentials
+        +String checkpoint_timestamp
+        +run()
+        #_execute_incremental_query()
+    }
+
+    class RemoteAPICollector {
+        +String api_endpoint
+        +String auth_token
+        +run()
+        #_parse_response_payload()
+    }
+
+    class WebScraperCollector {
+        +String target_url
+        +String regex_pattern
+        +run()
+        #_extract_html_content()
+    }
+
+    class Config_YAML {
+        <<file>>
+        +Settings settings
+        +Jobs agendamento
+    }
+
+    Main_Maestro --> CLIPFactory : solicita objeto por ID
+    CLIPFactory ..> CLIPCollector : instancia via factory
+    CLIPCollector <|-- StreamingDataCollector : padrão contínuo
+    CLIPCollector <|-- DatabaseBatchCollector : padrão incremental
+    CLIPCollector <|-- RemoteAPICollector : padrão REST/JSON
+    CLIPCollector <|-- WebScraperCollector : padrão Scraping
+    CLIPCollector o-- Config_YAML : injeta configurações
+
