@@ -1,0 +1,12 @@
+# --- Core CLIP ---
+PyYAML          # Gestão do config.yml
+schedule        # Maestro de agendamento
+pika            # Integração com RabbitMQ
+
+# --- Collectors & Protocols ---
+requests        # Coletas HTTP (PREPS, Termômetro, SeaVision)
+psycopg2-binary # Conexão com Banco de Dados (SAR)
+pytz            # Gestão de Fuso Horário (Padronização UTC)
+
+# --- Utilities ---
+# selenium      # Automatizar o login de um sistema no futuro
