@@ -1,20 +1,22 @@
+## CLIP - Coleta, Limpeza, Integração e Padronização de dados
 
 <div align="center">
   <img src="https://github.com/caju1000/CLIP/blob/main/CLIP.png" alt="Logo do CLIP" width="500px">
 </div>
 
+### Atualização e dependências de sistema
 ```
-# Atualização e dependências de sistema
 sudo apt update
 sudo apt install -y python3-pip python3-dev libpq-dev xvfb rabbitmq-server
 
 ```
 
+### Dependências do Python
 ```
 pip install -r requirements.txt
 ```
 
-
+### Banner do CLIP
 ```
 python3 main.py -h
 usage: main.py [-h] [--source ID] [--list] [--show-jobs] [--debug] [--scheduler]
