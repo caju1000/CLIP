@@ -4,6 +4,18 @@
 </div>
 
 ```
+# Atualização e dependências de sistema
+sudo apt update
+sudo apt install -y python3-pip python3-dev libpq-dev xvfb rabbitmq-server
+
+```
+
+```
+pip install -r requirements.txt
+```
+
+
+```
 python3 main.py -h
 usage: main.py [-h] [--source ID] [--list] [--show-jobs] [--debug] [--scheduler]
 
