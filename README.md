@@ -48,7 +48,7 @@ options:
 
 
 ## Arquitetura do CLIP
-Abaixo está o diagrama de classes que descreve a estrutura do CLIP utilizando o padrão Factory:
+Abaixo está o diagrama de classes que descreve a estrutura do CLIP utilizando o Padrão de Projeto Factory:
 
 ```mermaid
 classDiagram
