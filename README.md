@@ -175,14 +175,22 @@ clip --source my_new_source
 ```
 
 ## Estrutura de Diretório 
-```Text
+```markdown
 clip-framework/
-├── core/                 # Núcleo do sistema (Factory, Scheduler, Base)
-├── collectors/           # Plugins de coleta (Implementação novas fontes)
-├── sources.d/            # Arquivos de configuração descentralizados (YAML)
-├── logs/                 # Trilha de auditoria e histórico local
-├── main.py               # Ponto de entrada do CLI
-└── setup.py              # Script de instalação global
+├── core/                   # Núcleo (Factory, Scheduler, Base)
+├── collectors/             # Plugins ativos (.py)
+│   └── templates/          # Modelos de classe para novos desenvolvedores
+│       └── template_collector.py
+├── collectors.disable/     # Coletores pausados ou em manutenção
+├── sources.d/              # Configurações ativas (.yaml)
+│   └── templates/          # Modelos de YAML para novas fontes
+│       └── template_source.yaml
+├── sources.disable/        # Configurações desativadas
+├── logs/                   # Trilha de auditoria e histórico local (/var/log/CLIP)
+├── main.py                 # Ponto de entrada (CLI)
+├── setup.py                # Instalação global (pip install -e .)
+└── config.yml              # Configurações globais (RabbitMQ, DB, Paths)
+
 
 
 ```
