@@ -13,18 +13,25 @@ Diferente de ferramentas de ETL convencionais, o CLIP foca na resiliência e na 
 
 
 ## Atualização e dependências de sistema
-```
+```Terminal
 sudo apt update
 sudo apt install -y python3-pip python3-dev libpq-dev xvfb rabbitmq-server
 ```
 
 ## Dependências do Python
-```
+```Terminal
 pip install -r requirements.txt
 ```
 
-## Interface de Linha de Comando (CLI)
+## Instalação do Framework
+```Terminal
+git clone https://github.com/caju1000/CLIP.git
+cd CLIP
+pip3 install -e . --break-system-packages
 ```
+
+## Interface de Linha de Comando (CLI)
+```Terminal
 clip -h
 usage: clip [-h] [--source ID] [--list] [--show-jobs] [--debug] [--scheduler]
 
@@ -162,7 +169,7 @@ monitor_config:
 
 ### 3. Deploy:
 Reinicie o serviço ou execute diretamente via CLI:
-```
+```Terminal
 clip --source my_new_source
 
 ```
