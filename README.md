@@ -167,3 +167,15 @@ clip --source my_new_source
 
 ```
 
+## Estrutura de Diretório 
+```Text
+clip-framework/
+├── core/                 # Núcleo do sistema (Factory, Scheduler, Base)
+├── collectors/           # Plugins de coleta (Implementação novas fontes)
+├── sources.d/            # Arquivos de configuração descentralizados (YAML)
+├── logs/                 # Trilha de auditoria e histórico local
+├── main.py               # Ponto de entrada do CLI
+└── setup.py              # Script de instalação global
+
+
+```
