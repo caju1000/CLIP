@@ -11,16 +11,6 @@ Diferente de ferramentas de ETL convencionais, o CLIP foca na resiliência e na 
 - Consultas em Bancos de Dados (PostgreSQL, SQL Server, MySQL)
 - Monitoramento de Infraestrutura (ICMP Ping, Web Health Checks)
 
-### Arquitetura "Maestro"
-O framework utiliza uma arquitetura baseada em Factory Design Pattern, permitindo que novos conectores sejam "plugados" ao sistema sem a necessidade de alterar o núcleo do software.
-Fluxo de Dados:
-- Collectors: Classes especializadas que executam a lógica de extração.
-- Maestro (Scheduler): Orquestrador que gerencia frequências de execução e concorrência.
-- Broker (RabbitMQ): Garante a persistência e o desacoplamento entre a coleta e a indexação.
-- Standardization: Todos os dados são convertidos para o formato CLIP Standard JSON antes da integração.
-
-
-
 
 ### Atualização e dependências de sistema
 ```
@@ -65,8 +55,15 @@ options:
 
 
 
-## Arquitetura do CLIP
-Abaixo está o diagrama de classes que descreve a estrutura do CLIP utilizando o Padrão de Projeto Factory:
+## Arquitetura do "Maestro"
+O framework utiliza uma arquitetura baseada em Factory Design Pattern, permitindo que novos conectores sejam "plugados" ao sistema sem a necessidade de alterar o núcleo do software.
+
+Fluxo de Dados:
+- Collectors: Classes especializadas que executam a lógica de extração.
+- Maestro (Scheduler): Orquestrador que gerencia frequências de execução e concorrência.
+- Broker (RabbitMQ): Garante a persistência e o desacoplamento entre a coleta e a indexação.
+- Standardization: Todos os dados são convertidos para o formato CLIP Standard JSON antes da integração.
+
 
 ```mermaid
 classDiagram
