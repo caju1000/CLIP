@@ -65,6 +65,7 @@ Fluxo de Dados:
 - Standardization: Todos os dados são convertidos para o formato CLIP Standard JSON antes da integração.
 
 
+
 ```mermaid
 classDiagram
     class Main_Maestro {
@@ -86,7 +87,8 @@ classDiagram
         +Logger logger
         +Config config
         #_setup_logging()
-        +run()* +integrate(queue, data)
+        +run()
+        +integrate(queue, data)
     }
 
     class StreamingDataCollector {
@@ -117,16 +119,18 @@ classDiagram
     }
 
     class Config_YAML {
-        <<file>>
         +Settings settings
         +Jobs agendamento
     }
 
     Main_Maestro --> CLIPFactory : solicita objeto por ID
     CLIPFactory ..> CLIPCollector : instancia via factory
-    CLIPCollector <|-- StreamingDataCollector : padrão contínuo
-    CLIPCollector <|-- DatabaseBatchCollector : padrão incremental
-    CLIPCollector <|-- RemoteAPICollector : padrão REST/JSON
-    CLIPCollector <|-- WebScraperCollector : padrão Scraping
+    StreamingDataCollector --|> CLIPCollector : herda
+    DatabaseBatchCollector --|> CLIPCollector : herda
+    RemoteAPICollector --|> CLIPCollector : herda
+    WebScraperCollector --|> CLIPCollector : herda
     CLIPCollector o-- Config_YAML : injeta configurações
+
+
+
 
