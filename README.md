@@ -1,4 +1,4 @@
-## CLIP - Coleta, Limpeza, Integração e Padronização de dados
+# CLIP - Coleta, Limpeza, Integração e Padronização de dados
 
 <div align="center">
   <img src="https://github.com/caju1000/CLIP/blob/main/CLIP.png" alt="Logo do CLIP" width="500px">
@@ -12,22 +12,21 @@ Diferente de ferramentas de ETL convencionais, o CLIP foca na resiliência e na 
 - Monitoramento de Infraestrutura (ICMP Ping, Web Health Checks)
 
 
-### Atualização e dependências de sistema
+## Atualização e dependências de sistema
 ```
 sudo apt update
 sudo apt install -y python3-pip python3-dev libpq-dev xvfb rabbitmq-server
-
 ```
 
-### Dependências do Python
+## Dependências do Python
 ```
 pip install -r requirements.txt
 ```
 
-### Interface de Linha de Comando (CLI)
+## Interface de Linha de Comando (CLI)
 ```
-python3 main.py -h
-usage: main.py [-h] [--source ID] [--list] [--show-jobs] [--debug] [--scheduler]
+clip -h
+usage: clip [-h] [--source ID] [--list] [--show-jobs] [--debug] [--scheduler]
 
       __          
     o/  \o   ██████╗██╗     ██╗██████╗ 
@@ -131,6 +130,40 @@ classDiagram
     WebScraperCollector --|> CLIPCollector : herda
     CLIPCollector o-- Config_YAML : injeta configurações
 
+```
 
 
+## Extensibilidade & Plugins (Auto-Discovery)
+O CLIP foi projetado sob o princípio de Open-Closed (Aberto para extensão, fechado para modificação). Adicionar uma nova fonte de dados ao ecossistema não requer alterações no núcleo do framework.
+Como adicionar uma nova fonte (3 Passos)
+### 1. Criar o Coletor:
+Crie um arquivo Python em collectors/ herdando da classe base. O CLIP detectará automaticamente sua nova classe via Reflection/Auto-Discovery.
+
+```python
+from core.base import CLIPCollector
+
+class MyNewSourceCollector(CLIPCollector):
+    def run(self):
+        data = self.my_custom_logic()
+        self.integrate("my_queue", data)
+        
+```
+
+### 2. Configurar a Fonte:
+Adicione um arquivo YAML na pasta sources.d/. O Maestro lerá as configurações de agendamento e credenciais isoladamente.
+```yaml
+# sources.d/my_source.yml
+monitor_config:
+  id: my_new_source
+  scheduler: "*/5 * * * *" # Exemplo Cron
+  retention_days: 7
+
+```
+
+### 3. Deploy:
+Reinicie o serviço ou execute diretamente via CLI:
+```
+clip --source my_new_source
+
+```
 
