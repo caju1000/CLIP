@@ -74,7 +74,7 @@ Fluxo de Dados:
 
 ```mermaid
 classDiagram
-    class Main_Maestro {
+    class MainMaestro {
         +String source_id
         +Boolean debug_mode
         +Boolean scheduler_mode
@@ -82,8 +82,8 @@ classDiagram
     }
 
     class CLIPFactory {
-        +dict _collectors_registry
-        +get_collector(source_id, debug) CLIPCollector
+        -dict _collectors_registry
+        +get_collector(source_id, debug_mode) CLIPCollector
     }
 
     class CLIPCollector {
@@ -91,15 +91,15 @@ classDiagram
         +String name
         +Boolean debug
         +Logger logger
-        +Config config
+        +Config_YAML config
         #_setup_logging()
-        +run()
-        +integrate(queue, data)
+        +run()*
+        +integrate(queue_name, payload)
     }
 
     class StreamingDataCollector {
         +int listen_port
-        +run() 
+        +run()
         #_handle_socket_connection()
     }
 
@@ -125,17 +125,19 @@ classDiagram
     }
 
     class Config_YAML {
-        +Settings settings
-        +Jobs agendamento
+        +dict pipeline_settings
+        +dict job_scheduler
+        +load_config(file_path)
     }
 
-    Main_Maestro --> CLIPFactory : solicita objeto por ID
+    MainMaestro --> CLIPFactory : solicita objeto por ID
     CLIPFactory ..> CLIPCollector : instancia via factory
-    StreamingDataCollector --|> CLIPCollector : herda
-    DatabaseBatchCollector --|> CLIPCollector : herda
-    RemoteAPICollector --|> CLIPCollector : herda
-    WebScraperCollector --|> CLIPCollector : herda
-    CLIPCollector o-- Config_YAML : injeta configurações
+    StreamingDataCollector --|> CLIPCollector : herda/implementa
+    DatabaseBatchCollector --|> CLIPCollector : herda/implementa
+    RemoteAPICollector --|> CLIPCollector : herda/implementa
+    WebScraperCollector --|> CLIPCollector : herda/implementa
+    CLIPCollector o-- Config_YAML : injeta parâmetros declarativos
+
 
 ```
 
