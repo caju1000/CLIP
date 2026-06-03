@@ -11,16 +11,10 @@ Diferente de ferramentas de ETL convencionais, o CLIP foca na resiliência e na 
 - Consultas em Bancos de Dados (PostgreSQL, SQL Server, MySQL)
 - Monitoramento de Infraestrutura (ICMP Ping, Web Health Checks)
 
-
 ## Atualização e dependências de sistema
 ```Terminal
 sudo apt update
 sudo apt install -y python3-pip python3-dev libpq-dev xvfb rabbitmq-server
-```
-
-## Dependências do Python
-```Terminal
-pip install -r requirements.txt
 ```
 
 ## Instalação do Framework
@@ -28,6 +22,11 @@ pip install -r requirements.txt
 git clone https://github.com/caju1000/CLIP.git
 cd CLIP
 pip3 install -e . --break-system-packages
+```
+
+## Dependências do Python
+```Terminal
+pip install -r requirements.txt
 ```
 
 ## Interface de Linha de Comando (CLI)
