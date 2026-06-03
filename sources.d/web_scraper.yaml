@@ -1,0 +1,17 @@
+id: web_scraper
+type: batch
+index_name: base-web-scraper
+
+web_target:
+  url: "http://target.node.local/metrics_panel.html"
+  encoding: "ISO-8859-1"
+  # Expressão regular genérica parametrizável para capturar dois grupos numéricos flutuantes
+  regex_pattern: "MetricAlpha:\\s*</td>\\s*<td>\\s*([0-9]+\\.[0-9]+).*?MetricBeta:\\s*</td>\\s*<td>\\s*([0-9]+\\.[0-9]+)%"
+  source_identifier: "node_sensors_cluster"
+  queue: "pipeline_web_scraper"
+
+scheduler:
+  cron: "*/5 * * * *"
+
+logging:
+  retention: 2

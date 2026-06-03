@@ -1,0 +1,22 @@
+# ==============================================================================
+# CLIP 2.0 - ARQUIVO DE CONFIGURAÇÃO GLOBAL DE INFRAESTRUTURA
+# ==============================================================================
+
+paths:
+  log_dir: "/var/log/CLIP"
+  checkpoints_dir: "/var/lib/clip/checkpoints"
+  spatial_data_dir: "/var/lib/clip/spatial"
+
+databases:
+  primary_warehouse:
+    host: "localhost"      # Substitua pelo IP/Host do seu cluster de Banco de Dados
+    port: 5432
+    database: "warehouse"
+    user: "db_user"
+    password: "secure_password_or_env"
+
+rabbitmq:
+  host: "127.0.0.1"        # Central de Mensageria (Message Broker)
+  port: 5672
+  user: "guest"
+  pass: "guest"

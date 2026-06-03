@@ -1,0 +1,20 @@
+id: database_batch
+type: batch
+index_name: base-database-extract
+
+query_settings:
+  # Aponta qual o bloco de conexão do config.yml global deve ser injetado pela Factory
+  db_alias: "primary_warehouse"
+  
+  # Query base estruturada (Pode ser qualquer visão ou junção complexa)
+  sql_query: "SELECT id, event_name, status, updated_at FROM operational_logs"
+  
+  # Campo de controle utilizado para fazer a query incremental e não re-ingerir dados
+  incremental_field: "updated_at"
+  fallback_checkpoint: "2026-01-01T00:00:00Z"
+  
+  queue: "pipeline_db_batch"
+
+scheduler:
+  # Disparar a execução em lote a cada 15 minutos via Maestro Engine
+  cron: "*/15 * * * *"
