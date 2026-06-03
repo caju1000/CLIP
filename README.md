@@ -178,20 +178,27 @@ clip --source my_new_source
 
 ## Estrutura de Diretório 
 ```markdown
-clip-framework/
-├── core/                   # Núcleo (Factory, Scheduler, Base)
-├── collectors/             # Plugins ativos (.py)
-│   └── templates/          # Modelos de classe para novos desenvolvedores
-│       └── template_collector.py
-├── collectors.disable/     # Coletores pausados ou em manutenção
-├── sources.d/              # Configurações ativas (.yaml)
-│   └── templates/          # Modelos de YAML para novas fontes
-│       └── template_source.yaml
-├── sources.disable/        # Configurações desativadas
-├── logs/                   # Trilha de auditoria e histórico local (/var/log/CLIP)
-├── main.py                 # Ponto de entrada (CLI)
-├── setup.py                # Instalação global (pip install -e .)
-└── config.yml              # Configurações globais (RabbitMQ, DB, Paths)
+CLIP/
+├── collectors/
+│   ├── __init__.py
+│   ├── remote_api.py       # Template de API HTTP (Baseado no preps)
+│   ├── web_scraper.py      # Template de Scraping HTML (Baseado no termômetro)
+│   └── database_batch.py   # 🌟 Template de Banco Relacional Incremental
+├── core/
+│   ├── __init__.py
+│   ├── base.py             # Classe Abstrata CLIPCollector (Template Method)
+│   ├── factory.py          # CLIPFactory (Auto-Discovery de plugins)
+│   └── scheduler.py        # CLIPScheduler (Maestro Engine multi-thread)
+├── sources.d/
+│   ├── remote_api.yaml
+│   ├── web_scraper.yaml
+│   └── database_batch.yaml # 🌟 Template Configuração declarativa da query e cron
+├── templates/
+│   ├── database_batch.py   # Cópia limpa para referência de usuários do framework
+│   └── database_batch.yaml
+├── config.yml              # Parametrização global de infra (Sem senhas expostas)
+├── main.py                 # Ponto de entrada CLI (clip --scheduler)
+└── setup.py                # Empacotamento de dependências via setuptools
 
 
 
